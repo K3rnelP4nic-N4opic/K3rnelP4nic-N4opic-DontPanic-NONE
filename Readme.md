@@ -2,173 +2,131 @@
 
 ## Table des Matières
 
+- [Introduction](#introduction)
 - [Description](#description)
 - [Fonctionnalités](#fonctionnalités)
 - [Architecture du Projet](#architecture-du-projet)
 - [Installation](#installation)
+  - [Prérequis](#prérequis)
+  - [Étapes d'installation](#étapes-dinstallation)
 - [Utilisation](#utilisation)
+  - [Lancer le Serveur](#lancer-le-serveur)
+  - [Lancer le Client](#lancer-le-client)
+  - [Commandes Disponibles](#commandes-disponibles)
 - [Configuration](#configuration)
 - [Sécurité](#sécurité)
+  - [Mécanismes de Sécurité](#mécanismes-de-sécurité)
+  - [Améliorations Futures](#améliorations-futures)
+
+---
+
+## Introduction
+
+**RUST-SigTerm** est une solution de messagerie sécurisée construite en Rust, visant à fournir des communications privées et fiables entre utilisateurs. Ce projet met l'accent sur une sécurité robuste grâce à l'utilisation d'algorithmes modernes de chiffrement et de techniques de gestion des erreurs.
+
+---
 
 ## Description
 
-**Secure Messaging** est une application de messagerie sécurisée développée en Rust. Elle permet à plusieurs utilisateurs de communiquer de manière privée et sécurisée via un serveur centralisé. Toutes les communications sont chiffrées afin de garantir la confidentialité et l'intégrité des messages échangés. (languages de golement (RUST))
+Le projet repose sur un modèle client-serveur. Les messages envoyés entre les utilisateurs sont chiffrés et passent par un serveur centralisé. Les principales fonctionnalités incluent la gestion des utilisateurs, la prévention des abus (anti-spam), et un chiffrement avancé pour garantir la confidentialité des messages.
+
+---
 
 ## Fonctionnalités
 
-- **Chiffrement AES-256-GCM** : Toutes les communications sont chiffrées à l'aide de l'algorithme AES-256-GCM pour assurer une sécurité maximale.
-- **Gestion Multi-Clients** : Le serveur peut gérer simultanément plusieurs connexions de clients.
+### Principales
+- **Chiffrement AES-256-GCM** : Garantit la confidentialité des communications.
+- **Multi-Clients** : Prise en charge simultanée de plusieurs connexions.
 - **Commandes Utilisateur** :
-  - `/help` : Affiche la liste des commandes disponibles.
-  - `/list` : Liste tous les utilisateurs actuellement connectés.
-  - `/quit` : Permet de se déconnecter proprement du serveur.
-- **Anti-Spam** : Limite le nombre de messages qu'un utilisateur peut envoyer par seconde pour prévenir les abus.
-- **Journalisation** : Enregistre les événements importants tels que les connexions, déconnexions, et erreurs.
-- **Gestion des Erreurs** : Envoie des messages d'erreur chiffrés aux clients en cas de problèmes de décodage ou de déchiffrement.
+  - `/help` : Liste des commandes disponibles.
+  - `/list` : Affiche les utilisateurs connectés.
+  - `/quit` : Déconnexion propre.
+- **Anti-Spam** : Prévention des abus via des limites de fréquence.
+- **Journalisation** : Suivi des événements critiques (connexions, erreurs).
+- **Gestion des Erreurs** : Retour d'informations sécurisées en cas de problème.
+
+### Avancées
+- Modularité du code pour une extension facile.
+- Intégration d'un fichier de configuration `config.toml`.
+- Support pour une éventuelle utilisation avec Docker.
+
+---
 
 ## Architecture du Projet
 
-Le projet est structuré de manière modulaire pour faciliter la maintenance et l'extension des fonctionnalités :
+Le projet suit une architecture modulaire et bien organisée pour faciliter la maintenance :
 
-
-```
+```plaintext
 .
-├── Cargo.lock
-├── Cargo.toml
-├── Readme.md
-├── config.toml
-├── docker
-│   ├── Dockerfile
-│   ├── config.toml
-│   ├── docs.md
-│   └── entrypoint.sh
-├── docker-compose.yml
-├── docs.md
-├── keys
-│   └── key_here.txt
-└── src
-    ├── bin
-    │   └── client.rs
-    ├── client
-    │   ├── auth.rs
-    │   ├── config.rs
-    │   ├── handlers
-    │   │   ├── message_handler.rs
-    │   │   ├── mod.rs
-    │   │   ├── secure_setup.rs
-    │   │   └── username.rs
-    │   ├── mod.rs
-    │   ├── types
-    │   │   ├── auth_message.rs
-    │   │   └── mod.rs
-    │   └── ui
-    │       ├── display.rs
-    │       ├── format.rs
-    │       └── mod.rs
-    ├── crypto
-    │   ├── key.rs
-    │   ├── mod.rs
-    │   └── secure_channel.rs
-    ├── lib.rs
-    ├── logger.rs
-    ├── main.rs
-    ├── messages.rs
-    ├── security
-    │   ├── authentication.rs
-    │   ├── ecdh.rs
-    │   └── mod.rs
-    ├── server
-    │   ├── client_info.rs
-    │   ├── commands.rs
-    │   ├── handlers.rs
-    │   ├── mod.rs
-    │   └── username.rs
-    ├── storage
-    │   ├── key_manager.rs
-    │   └── mod.rs
-    └── util
-        ├── mod.rs
-        └── send_encrypted.rs
-
-13 directories, 43 files
-
+├── Cargo.toml       # Dépendances et métadonnées
+├── src/             # Code source principal
+│   ├── bin/         # Points d'entrée pour le serveur et le client
+│   ├── client/      # Modules spécifiques au client
+│   ├── crypto/      # Gestion du chiffrement et des clés
+│   ├── logger.rs    # Gestion des journaux
+│   ├── messages.rs  # Gestion des messages
+│   ├── server/      # Modules spécifiques au serveur
+│   ├── storage/     # Gestion des clés et des données persistantes
+│   └── util/        # Fonctions utilitaires
+├── config.toml      # Configuration personnalisée
+├── docker/          # Configuration pour Docker (optionnelle)
+└── Readme.md        # Documentation
 ```
 
-### Description des Modules
-
-- **crypto/** : Contient les modules liés au chiffrement et à la gestion des clés.
-  - `secure_channel.rs` : Implémente le chiffrement et le déchiffrement des messages.
-  - `key.rs` : Gère la clé partagée utilisée pour le chiffrement.
-- **server/** : Regroupe la logique du serveur.
-  - `client_info.rs` : Structure et logique anti-spam pour les clients.
-  - `commands.rs` : Gestion des commandes utilisateur.
-  - `handlers.rs` : Fonctions principales pour gérer les connexions et la diffusion des messages.
-  - `username.rs` : Gestion de la requête et de l'enregistrement des noms d'utilisateur.
-- **util/** : Contient des fonctions utilitaires.
-  - `send_encrypted.rs` : Fonction pour envoyer des messages chiffrés.
-- **logger.rs** : Fonctions de journalisation des événements.
-- **messages.rs** : Définitions des messages utilisés dans l'application.
-- **main.rs** : Point d'entrée du serveur.
-- **bin/client.rs** : Point d'entrée du client.
+---
 
 ## Installation
 
 ### Prérequis
+Avant de commencer, assurez-vous d'avoir installé :
+- **Rust** : [Installer via rustup](https://rustup.rs/).
+- (Optionnel) **Docker** : Pour exécuter dans un conteneur.
 
-- **Rust** : Assurez-vous d'avoir Rust installé. Vous pouvez l'installer via [rustup](https://rustup.rs/).
+### Étapes d'installation
 
-### Étapes d'Installation
-
-1. **Cloner le Répertoire**
-
+1. **Cloner le dépôt**
    ```bash
-   git clone git@github.com:MatthieuBarraque/Rust-Cipher-SecureComms.git
+   git clone https://github.com/MatthieuBarraque/Rust-Cipher-SecureComms.git
    cd Rust-Cipher-SecureComms
    ```
 
-2. **Compiler le Projet**
-
-   Utilisez Cargo pour compiler le serveur et le client.
-
+2. **Construire le projet**
+   Utilisez Cargo pour compiler le code en mode production :
    ```bash
    cargo build --release
    ```
 
-   Les binaires seront situés dans `target/release/`.
+3. **Configurer le fichier TOML (Optionnel)**
+   Modifiez `config.toml` pour adapter l'application à vos besoins.
+
+---
 
 ## Utilisation
 
 ### Lancer le Serveur
-
-Dans un terminal, exécutez le serveur :
-
+Dans un terminal :
 ```bash
 cargo run --bin secure_chat
 ```
-
-Vous verrez des messages indiquant que le serveur a démarré et est en écoute.
+Le serveur démarre et attend les connexions sur le port spécifié dans `config.toml`.
 
 ### Lancer le Client
-
-Dans un autre terminal, exécutez le client :
-
+Dans un autre terminal :
 ```bash
 cargo run --bin client
 ```
-
-Suivez les instructions à l'écran pour entrer votre nom d'utilisateur et commencer à envoyer des messages.
+Suivez les instructions pour choisir un nom d'utilisateur et commencer à chatter.
 
 ### Commandes Disponibles
+- **/help** : Affiche les commandes disponibles.
+- **/list** : Liste les utilisateurs connectés.
+- **/quit** : Quitte proprement le serveur.
 
-- `/help` : Affiche les commandes disponibles.
-- `/list` : Liste tous les utilisateurs actuellement connectés.
-- `/quit` : Se déconnecter du serveur.
+---
 
 ## Configuration
 
-Le projet peut être configuré via un fichier `config.toml` (optionnel). Vous pouvez définir des paramètres tels que l'adresse du serveur, les ports, etc.
-
-Exemple de `config.toml` :
+Le comportement du projet peut être ajusté avec `config.toml` :
 
 ```toml
 [server]
@@ -179,23 +137,29 @@ port = 7878
 max_messages_per_sec = 5
 ```
 
-*(Ajoutez ce fichier dans la racine du projet et modifiez `main.rs` et `client.rs` pour lire ces configurations.)*
+Pour appliquer des configurations personnalisées, placez ce fichier dans le répertoire racine et modifiez `src/main.rs` pour qu'il le charge dynamiquement.
+
+---
 
 ## Sécurité
 
-**Secure Messaging** intègre plusieurs mécanismes de sécurité pour garantir la confidentialité et l'intégrité des communications :
+### Mécanismes de Sécurité
+1. **Chiffrement** :
+   - Algorithme AES-256-GCM pour protéger les messages.
+   - Gestion des clés de session unique par utilisateur.
 
-- **Chiffrement AES-256-GCM** : Utilisé pour chiffrer et déchiffrer les messages entre les clients et le serveur.
-- **Gestion des Clés** : Une clé partagée est utilisée pour le chiffrement symétrique. La clé est stockée de manière sécurisée et est effacée lors de la fermeture du serveur.
-- **Anti-Spam** : Limitation du nombre de messages qu'un utilisateur peut envoyer par seconde pour prévenir les abus.
-- **Validation des Messages** : Tous les messages sont décodés et déchiffrés avant d'être traités. En cas d'échec, des messages d'erreur sécurisés sont envoyés aux clients.
-- **Journalisation Sécurisée** : Les événements importants sont enregistrés avec des niveaux de gravité appropriés (INFO, WARN, ERREUR).
+2. **Anti-Spam** :
+   - Limite la fréquence des messages pour éviter les abus.
+
+3. **Validation des Messages** :
+   - Les messages sont vérifiés avant traitement.
+
+4. **Journalisation** :
+   - Les événements critiques sont enregistrés avec un système de niveaux (INFO, WARNING, ERROR).
 
 ### Améliorations Futures
+- **Échange de Clés Sécurisé** : Implémentation de Diffie-Hellman.
+- **Chiffrement de Bout en Bout** : Garantir que seuls l'expéditeur et le destinataire peuvent lire les messages.
+- **TLS** : Protéger les communications réseau contre les interceptions.
 
-Pour renforcer davantage la sécurité, envisagez d'ajouter :
-
-- **Échange de Clés Sécurisé** : Implémenter un protocole d'échange de clés (comme Diffie-Hellman) pour générer des clés de session uniques par client.
-- **Authentification des Clients** : Ajouter une étape d'authentification avec des identifiants uniques pour chaque utilisateur.
-- **Chiffrement de Bout en Bout** : Assurer que seuls l'expéditeur et le destinataire peuvent lire les messages.
-- **Utilisation de TLS** : Chiffrer les communications réseau avec TLS pour protéger contre les interceptions.
+---
