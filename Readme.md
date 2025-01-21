@@ -1,5 +1,5 @@
 # RUST-SigTerm
-
+![Capture](./screenshots/ok.webp)
 ## Table des Matières
 
 - [Introduction](#introduction)
@@ -74,9 +74,9 @@ Le projet suit une architecture modulaire et bien organisée pour faciliter la m
 ```
 
 ## Exemple de Capture d'Écran
-Voici une capture d'écran du trafic réseau capturé avec `tcpdump` :
+Voici une capture d'écran exemple build :
 
-![Capture d'écran de tcpdump](./screenshots/secure.png)
+![Capture d'écran de tcpdump](./screenshots/build.png)
 
 ---
 
@@ -91,8 +91,8 @@ Avant de commencer, assurez-vous d'avoir installé :
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/MatthieuBarraque/Rust-Cipher-SecureComms.git
-   cd Rust-Cipher-SecureComms
+   git clone git@github.com:K3rnelP4nic-N4opic/K3rnelP4nic-N4opic-DontPanic-NONE.git
+   cd K3rnelP4nic-N4opic-DontPanic-NONE
    ```
 
 2. **Construire le projet**
