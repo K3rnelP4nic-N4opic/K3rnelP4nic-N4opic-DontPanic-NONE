@@ -106,14 +106,14 @@ Avant de commencer, assurez-vous d'avoir installé :
 ### Lancer le Serveur
 Dans un terminal :
 ```bash
-cargo run --bin secure_chat
+./target/realese/secure_chat
 ```
 Le serveur démarre et attend les connexions sur le port spécifié dans `config.toml`.
 
 ### Lancer le Client
 Dans un autre terminal :
 ```bash
-cargo run --bin client
+./target/realese/client
 ```
 Suivez les instructions pour choisir un nom d'utilisateur et commencer à chatter.
 
