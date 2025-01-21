@@ -215,8 +215,8 @@ Pour appliquer des configurations personnalisées, placez ce fichier dans le ré
    - Les événements critiques sont enregistrés avec un système de niveaux (INFO, WARNING, ERROR).
 
 ### Améliorations Futures
-- **Échange de Clés Sécurisé** : Implémentation de Diffie-Hellman.
-- **Chiffrement de Bout en Bout** : Garantir que seuls l'expéditeur et le destinataire peuvent lire les messages.
-- **TLS** : Protéger les communications réseau contre les interceptions.
+- **Échange de Clés Sécurisé**
+
+- **Implémentation d'un systéme vers une plage de DNS sécurisé**
 
 ---
