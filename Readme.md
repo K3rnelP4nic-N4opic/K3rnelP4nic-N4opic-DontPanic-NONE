@@ -117,13 +117,7 @@ Le projet suit une architecture modulaire et bien organisée pour faciliter la m
     └── util
         ├── mod.rs
         └── send_encrypted.rs
-
 ```
-
-## Exemple de Capture d'Écran
-Voici une capture d'écran exemple build :
-
-![Capture d'écran de tcpdump](./screenshots/build.png)
 
 ---
 
@@ -151,12 +145,13 @@ Avant de commencer, assurez-vous d'avoir installé :
 3. **Configurer le fichier TOML (Optionnel)**
    Modifiez `config.toml` pour adapter l'application à vos besoins.
 
-## Exemple de Capture d'Écran
-Voici une capture d'écran du trafic réseau capturé avec `tcpdump` :
-
-![Capture d'écran de tcpdump](./screenshots/secure.png)
-
 ---
+
+## Exemple de Capture d'Écran
+Voici une capture d'écran exemple build :
+
+![Capture d'écran de tcpdump](./screenshots/build.png)
+
 
 ## Utilisation
 
@@ -180,6 +175,11 @@ Suivez les instructions pour choisir un nom d'utilisateur et commencer à chatte
 - **/quit** : Quitte proprement le serveur.
 
 ---
+
+## Exemple de Capture d'Écran
+Voici une capture d'écran du trafic réseau capturé avec `tcpdump` :
+
+![Capture d'écran de tcpdump](./screenshots/secure.png)
 
 ## Configuration
 
