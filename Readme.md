@@ -57,20 +57,67 @@ Le projet repose sur un modèle client-serveur. Les messages envoyés entre les 
 Le projet suit une architecture modulaire et bien organisée pour faciliter la maintenance :
 
 ```plaintext
-.
-├── Cargo.toml       # Dépendances et métadonnées
-├── src/             # Code source principal
-│   ├── bin/         # Points d'entrée pour le serveur et le client
-│   ├── client/      # Modules spécifiques au client
-│   ├── crypto/      # Gestion du chiffrement et des clés
-│   ├── logger.rs    # Gestion des journaux
-│   ├── messages.rs  # Gestion des messages
-│   ├── server/      # Modules spécifiques au serveur
-│   ├── storage/     # Gestion des clés et des données persistantes
-│   └── util/        # Fonctions utilitaires
-├── config.toml      # Configuration personnalisée
-├── docker/          # Configuration pour Docker (optionnelle)
-└── Readme.md        # Documentation
+├── Cargo.lock
+├── Cargo.toml
+├── config.toml
+├── docker
+│   ├── config.toml
+│   ├── Dockerfile
+│   ├── docs.md
+│   └── entrypoint.sh
+├── docker-compose.yml
+├── docs.md
+├── keys
+│   └── key_here.txt
+├── Readme.md
+├── screenshots
+│   ├── build.png
+│   ├── ok.webp
+│   └── secure.png
+└── src
+    ├── bin
+    │   └── client.rs
+    ├── client
+    │   ├── auth.rs
+    │   ├── config.rs
+    │   ├── handlers
+    │   │   ├── message_handler.rs
+    │   │   ├── mod.rs
+    │   │   ├── secure_setup.rs
+    │   │   └── username.rs
+    │   ├── mod.rs
+    │   ├── types
+    │   │   ├── auth_message.rs
+    │   │   └── mod.rs
+    │   └── ui
+    │       ├── display.rs
+    │       ├── format.rs
+    │       └── mod.rs
+    ├── crypto
+    │   ├── key.rs
+    │   ├── mod.rs
+    │   └── secure_channel.rs
+    ├── lib.rs
+    ├── logger.rs
+    ├── main.rs
+    ├── messages.rs
+    ├── security
+    │   ├── authentication.rs
+    │   ├── ecdh.rs
+    │   └── mod.rs
+    ├── server
+    │   ├── client_info.rs
+    │   ├── commands.rs
+    │   ├── handlers.rs
+    │   ├── mod.rs
+    │   └── username.rs
+    ├── storage
+    │   ├── key_manager.rs
+    │   └── mod.rs
+    └── util
+        ├── mod.rs
+        └── send_encrypted.rs
+
 ```
 
 ## Exemple de Capture d'Écran
