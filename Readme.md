@@ -73,6 +73,11 @@ Le projet suit une architecture modulaire et bien organisée pour faciliter la m
 └── Readme.md        # Documentation
 ```
 
+## Exemple de Capture d'Écran
+Voici une capture d'écran du trafic réseau capturé avec `tcpdump` :
+
+![Capture d'écran de tcpdump](./screenshots/secure.png)
+
 ---
 
 ## Installation
