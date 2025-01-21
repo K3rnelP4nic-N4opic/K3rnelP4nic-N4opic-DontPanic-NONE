@@ -104,6 +104,11 @@ Avant de commencer, assurez-vous d'avoir installé :
 3. **Configurer le fichier TOML (Optionnel)**
    Modifiez `config.toml` pour adapter l'application à vos besoins.
 
+## Exemple de Capture d'Écran
+Voici une capture d'écran du trafic réseau capturé avec `tcpdump` :
+
+![Capture d'écran de tcpdump](./screenshots/secure.png)
+
 ---
 
 ## Utilisation
